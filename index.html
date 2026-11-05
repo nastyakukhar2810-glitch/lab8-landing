@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UkrMovych — +1 бал на НМТ за 20 секунд щодня</title>
+  <meta name="description" content="Розумний тренажер із персоналізованими лайфхаками та інтервальним повторенням. Твій репетитор у кишені.">
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Tailwind CSS (CDN) + дизайн-система з ЛР №4 як тема Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#FF7A00', hover: '#FF9533', pressed: '#D66600' },
+            ink: '#12181E',
+            surface: { DEFAULT: '#1C242D', 2: '#252F3A' },
+            muted: '#94A3B8',
+            focus: '#3B82F6',
+            success: '#00C853'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          },
+          fontSize: {
+            display: ['clamp(2.5rem, 6.5vw, 4.5rem)', { lineHeight: '1.1' }],
+            h2: ['clamp(1.75rem, 4vw, 2.5rem)', { lineHeight: '1.15' }]
+          },
+          boxShadow: {
+            hard: '4px 4px 0 #000',
+            'hard-lg': '6px 6px 0 #000',
+            'hard-sm': '2px 2px 0 #000'
+          }
+        }
+      }
+    };
+  </script>
+  <!-- Користувацькі стилі: токени, складні фони, псевдоелементи -->
+  <link rel="stylesheet" href="custom-styles.css">
+</head>
+<body class="bg-ink font-sans text-base leading-normal text-white antialiased">
+  <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:font-bold focus:text-ink" href="#main">Перейти до змісту</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="gutter-x sticky top-0 z-40 flex flex-wrap items-center justify-between gap-x-4 border-b border-surface-2 bg-ink py-3">
+    <a class="flex items-center gap-2 rounded-lg text-xl font-bold" href="#top" aria-label="UkrMovych — на початок">
+      <img src="assets/images/logo.png" alt="" width="40" height="40" class="size-10">
+      <span>Ukr<span class="text-brand">Movych</span></span>
+      <span class="hidden rounded-lg bg-brand px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-ink sm:inline-block">НМТ</span>
+    </a>
+
+    <!-- Гамбургер: лише на мобільних і планшетах (до lg) -->
+    <button id="menu-toggle" type="button" class="inline-flex size-11 items-center justify-center rounded-lg border border-surface-2 text-xl transition-colors hover:border-brand hover:text-brand lg:hidden" aria-controls="menu" aria-expanded="false" aria-label="Відкрити меню">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <!-- Меню: на мобільних приховане (hidden), з lg — горизонтальне (lg:flex) -->
+    <div id="menu" class="hidden w-full flex-col gap-4 pb-4 pt-2 lg:flex lg:w-auto lg:flex-1 lg:flex-row lg:items-center lg:pb-0 lg:pt-0">
+      <nav class="lg:mx-auto" aria-label="Головна навігація">
+        <ul class="flex flex-col gap-1 text-sm lg:flex-row lg:gap-8">
+          <li><a class="flex min-h-11 items-center rounded-lg transition-colors hover:text-brand lg:min-h-0" href="#how">Як це працює</a></li>
+          <li><a class="flex min-h-11 items-center rounded-lg transition-colors hover:text-brand lg:min-h-0" href="#trainer">Тренажер</a></li>
+          <li><a class="flex min-h-11 items-center rounded-lg transition-colors hover:text-brand lg:min-h-0" href="#reviews">Відгуки</a></li>
+          <li><a class="flex min-h-11 items-center rounded-lg transition-colors hover:text-brand lg:min-h-0" href="#pricing">Тарифи</a></li>
+          <li><a class="flex min-h-11 items-center rounded-lg transition-colors hover:text-brand lg:min-h-0" href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center lg:gap-4">
+        <!-- Окрема сторінка входу буде в наступних роботах: поки це кнопка без переходу -->
+        <button type="button" class="flex min-h-11 items-center justify-start rounded-lg text-sm font-semibold transition-colors hover:text-brand">Увійти</button>
+        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-2xl border-2 border-transparent bg-brand px-4 py-2.5 text-sm font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:w-auto" href="#trainer">Спробувати безкоштовно</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== HERO ===================== -->
+    <section class="gutter-x flex flex-col items-stretch gap-8 py-12 lg:flex-row lg:items-center lg:justify-between lg:py-16" id="top" aria-labelledby="hero-title">
+      <div class="flex max-w-[640px] flex-col items-start gap-8">
+        <p class="inline-flex items-center gap-2 rounded-full border border-surface-2 bg-surface px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide text-white">
+          <i class="fas fa-fire text-brand" aria-hidden="true"></i> Підготовка до НМТ 2026 без нудьги
+        </p>
+        <h1 id="hero-title" class="text-display font-black">
+          +1 бал на НМТ <span class="text-brand underline decoration-4 underline-offset-8">за 20 секунд</span> щодня
+        </h1>
+        <p class="max-w-[46ch] text-base text-muted sm:text-lg">Розумний тренажер із персоналізованими лайфхаками та інтервальним повторенням. Твій репетитор у кишені.</p>
+        <div class="flex w-full flex-wrap items-center gap-4">
+          <a class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-brand px-7 py-4 font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:w-auto" href="#trainer">
+            Знайти свою слабку тему <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <p class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted">
+            <span class="flex" aria-hidden="true">
+              <b class="grid size-9 place-items-center rounded-full border-2 border-ink bg-brand text-sm font-bold text-ink">В</b>
+              <b class="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold text-white">М</b>
+              <b class="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold text-white">Н</b>
+            </span>
+            Приєдналися сьогодні
+          </p>
+        </div>
+        <dl class="flex flex-wrap gap-x-8 gap-y-4 self-stretch border-t border-surface-2 pt-8">
+          <div class="flex flex-col-reverse border-r border-surface-2 pr-8">
+            <dt class="text-xs uppercase tracking-wide text-muted">Учнів</dt>
+            <dd class="text-2xl font-black">3 000+</dd>
+          </div>
+          <div class="flex flex-col-reverse border-r border-surface-2 pr-8">
+            <dt class="text-xs uppercase tracking-wide text-muted">Середній прогрес</dt>
+            <dd class="text-2xl font-black">+52 бали</dd>
+          </div>
+          <div class="flex flex-col-reverse">
+            <dt class="text-xs uppercase tracking-wide text-muted">Середній бал</dt>
+            <dd class="text-2xl font-black">171</dd>
+          </div>
+        </dl>
+      </div>
+      <img class="mx-auto h-auto w-full max-w-[340px] lg:mx-0 lg:max-w-[440px]" src="assets/images/hero.png" alt="Чат-тренажер UkrMovych: тест із варіантами відповідей, прогрес і серія днів" width="687" height="814" onerror="this.hidden=true">
+    </section>
+
+    <!-- ===================== ПАРТНЕРИ ===================== -->
+    <section class="gutter-x border-y border-surface-2 py-8" aria-label="Партнери">
+      <ul class="flex flex-wrap justify-center gap-x-8 gap-y-4 font-black uppercase text-slate-500 md:justify-between">
+        <li>Ukraine</li><li>Ministry of Education</li><li>NMT Hub</li><li>Osvita.ua</li><li>ZNO.ua</li>
+      </ul>
+    </section>
+
+    <!-- ===================== КАРТКИ (сітка 1 → 2 → 3) ===================== -->
+    <section class="gutter-x grid grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:py-16" id="how" aria-labelledby="how-title">
+      <header class="col-span-full flex flex-col items-center gap-4 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-surface-2 bg-surface px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide">
+          <i class="fas fa-bolt text-brand" aria-hidden="true"></i> Інтерактивна практика
+        </p>
+        <h2 id="how-title" class="text-h2 font-black">Спробуй прямо зараз: обери <em class="italic text-brand">проблемну</em> тему</h2>
+      </header>
+
+      <article class="flex flex-col items-start gap-2 overflow-hidden rounded-2xl border-2 border-black bg-surface pb-4 shadow-hard transition duration-300 hover:-translate-y-1 hover:shadow-hard-lg [&>:not(figure)]:mx-8">
+        <figure class="card-media--grid relative mb-4 grid min-h-[210px] w-full place-items-center self-stretch border-b-2 border-black">
+          <img class="relative h-[68px] w-auto" src="assets/icons/icon-words.png" alt="" width="63" height="68" loading="lazy">
+        </figure>
+        <p class="inline-block rounded-lg bg-brand px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-ink">Наголоси</p>
+        <h3 class="text-2xl font-bold">Всі 233 слова НМТ</h3>
+        <p class="text-muted">Тренажер наголосів і винятків. Усі слова іспиту вивчаються за тиждень без зубрьожки.</p>
+        <p class="inline-flex items-center gap-2 rounded-lg border border-black bg-ink px-2.5 py-1 text-sm"><i class="fas fa-chart-simple text-brand" aria-hidden="true"></i> 233 слова • 57 аудіошпор</p>
+        <a class="mt-auto inline-flex min-h-11 items-center justify-center gap-2 self-stretch rounded-2xl border-2 border-black bg-ink px-5 py-3 font-bold text-white shadow-hard transition hover:border-brand active:translate-x-0.5 active:translate-y-0.5 active:shadow-hard-sm" href="#trainer">Дізнатися більше</a>
+      </article>
+
+      <article class="flex flex-col items-start gap-2 overflow-hidden rounded-2xl border-2 border-black bg-surface pb-4 shadow-hard transition duration-300 hover:-translate-y-1 hover:shadow-hard-lg [&>:not(figure)]:mx-8">
+        <figure class="card-media--ring relative mb-4 grid min-h-[210px] w-full place-items-center self-stretch border-b-2 border-black bg-surface">
+          <img class="relative h-[68px] w-auto" src="assets/icons/icon-repeat.png" alt="" width="63" height="68" loading="lazy">
+        </figure>
+        <p class="inline-block rounded-lg bg-brand px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-ink">Інтервальне повторення</p>
+        <h3 class="text-2xl font-bold">Розумні нагадування</h3>
+        <p class="text-muted">Бот сам формує графік повторень, щоб вивчені правила не забулися перед іспитом.</p>
+        <p class="inline-flex items-center gap-2 rounded-lg border border-black bg-ink px-2.5 py-1 text-sm"><i class="fas fa-layer-group text-brand" aria-hidden="true"></i> 250+ завдань • 40+ тем</p>
+        <a class="mt-auto inline-flex min-h-11 items-center justify-center gap-2 self-stretch rounded-2xl border-2 border-black bg-ink px-5 py-3 font-bold text-white shadow-hard transition hover:border-brand active:translate-x-0.5 active:translate-y-0.5 active:shadow-hard-sm" href="#trainer">Дізнатися більше</a>
+      </article>
+
+      <article class="flex flex-col items-start gap-2 overflow-hidden rounded-2xl border-2 border-black bg-surface pb-4 shadow-hard transition duration-300 hover:-translate-y-1 hover:shadow-hard-lg sm:max-lg:col-span-2 [&>:not(figure)]:mx-8">
+        <figure class="card-media--lines relative mb-4 grid min-h-[210px] w-full place-items-center self-stretch border-b-2 border-black">
+          <img class="relative h-[68px] w-auto" src="assets/icons/icon-trainers.png" alt="" width="63" height="68" loading="lazy">
+        </figure>
+        <p class="inline-block rounded-lg bg-brand px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-ink">Лексичні помилки</p>
+        <h3 class="text-2xl font-bold">Нескінченні тренажери</h3>
+        <p class="text-muted">Авторські пастки формату НМТ, візуалізовані схеми та моментальний розбір помилок.</p>
+        <p class="inline-flex items-center gap-2 rounded-lg border border-black bg-ink px-2.5 py-1 text-sm"><i class="fas fa-bolt text-brand" aria-hidden="true"></i> 110+ тренажерів • до +90 балів</p>
+        <a class="mt-auto inline-flex min-h-11 items-center justify-center gap-2 self-stretch rounded-2xl border-2 border-black bg-ink px-5 py-3 font-bold text-white shadow-hard transition hover:border-brand active:translate-x-0.5 active:translate-y-0.5 active:shadow-hard-sm" href="#trainer">Дізнатися більше</a>
+      </article>
+    </section>
+
+    <!-- ===================== ТРЕНАЖЕР ===================== -->
+    <section class="gutter-x grid grid-cols-1 gap-x-16 gap-y-4 py-12 lg:grid-cols-2 lg:content-center lg:py-16" id="trainer" aria-labelledby="trainer-title">
+      <ul class="flex flex-wrap gap-2 lg:col-start-1" aria-label="Теми тренажера">
+        <li class="rounded-full border border-surface-2 bg-surface px-4 py-2 text-sm font-bold text-muted">Наголоси</li>
+        <li class="rounded-full border border-brand bg-surface px-4 py-2 text-sm font-bold text-white">Правопис е–и–і</li>
+        <li class="rounded-full border border-surface-2 bg-surface px-4 py-2 text-sm font-bold text-muted">Спрощення</li>
+        <li class="rounded-full border border-surface-2 bg-surface px-4 py-2 text-sm font-bold text-muted">Апостроф</li>
+      </ul>
+      <h2 id="trainer-title" class="text-h2 font-black lg:col-start-1">Прокачуй грамотність граючи в тренажері</h2>
+      <p class="max-w-[46ch] text-base text-muted sm:text-lg lg:col-start-1">Наш бот аналізує твої помилки та підбирає завдання саме на ті теми, де ти втрачаєш бали.</p>
+
+      <aside class="grid grid-cols-1 items-center gap-x-4 gap-y-2 rounded-2xl bg-brand p-6 text-ink sm:grid-cols-[1fr_auto] sm:p-8 lg:col-start-1" id="pricing" aria-label="Пропозиція зі знижкою">
+        <p class="flex flex-wrap items-center gap-2 text-sm font-bold">
+          <span class="inline-block rounded-lg bg-ink px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-white">Limited offer</span> Знижка 30% розблокована!
+        </p>
+        <time class="justify-self-start rounded-lg bg-black/15 px-3 py-1.5 font-black sm:justify-self-end" datetime="PT14M59S"><i class="far fa-clock" aria-hidden="true"></i> <span data-countdown>14:59</span></time>
+        <p><strong class="text-3xl font-black">99 грн</strong> <s class="font-bold opacity-60">145 грн</s></p>
+        <button type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-ink px-5 py-3 font-bold text-white transition hover:bg-black active:scale-95 sm:justify-self-end">
+          Забрати доступ <i class="fas fa-arrow-right text-brand" aria-hidden="true"></i>
+        </button>
+      </aside>
+
+      <aside class="mx-auto mt-4 w-full max-w-[340px] rounded-[36px] border-4 border-surface-2 bg-ink p-4 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:self-center lg:justify-self-center" aria-label="Приклад чат-бота UkrMovych">
+        <header class="mb-8 flex items-center gap-2">
+          <span class="grid size-9 place-items-center rounded-full border-2 border-ink bg-brand text-sm font-bold text-ink">U</span>
+          <p class="flex flex-col leading-tight"><strong>UkrMovych Bot</strong><small class="text-xs text-success">онлайн</small></p>
+        </header>
+        <article class="relative rounded-2xl border border-surface-2 bg-surface p-4">
+          <p class="absolute -top-2.5 right-3 inline-block rounded-lg bg-brand px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-ink">+1 бал на НМТ!</p>
+          <p class="text-xs font-black uppercase tracking-widest text-muted">Питання #14</p>
+          <h3 class="mb-4 mt-2 text-sm font-bold">Букву <span class="text-brand">и</span> на місці пропуску треба писати в усіх словах кожного рядка, ОКРІМ:</h3>
+          <ul class="flex flex-col gap-2">
+            <li class="flex items-center gap-2 rounded-lg border border-surface-2 bg-ink p-2.5 text-xs"><b class="inline-grid size-5 place-items-center rounded bg-surface-2">A</b> бр…ніти, вел…тень, кр…ниця</li>
+            <li class="flex items-center gap-2 rounded-lg border border-brand bg-ink p-2.5 text-xs"><b class="inline-grid size-5 place-items-center rounded bg-brand text-ink">B</b> гр…міти, к…шеня, ч…ревики</li>
+            <li class="flex items-center gap-2 rounded-lg border border-surface-2 bg-ink p-2.5 text-xs"><b class="inline-grid size-5 place-items-center rounded bg-surface-2">C</b> гл…бочінь, м…нулий, ч…тати</li>
+            <li class="flex items-center gap-2 rounded-lg border border-surface-2 bg-ink p-2.5 text-xs"><b class="inline-grid size-5 place-items-center rounded bg-surface-2">D</b> кр…латий, д…ректор, б…нзин</li>
+          </ul>
+        </article>
+      </aside>
+    </section>
+
+    <!-- ===================== МЕДІА №1: ВІДЕО (ембеддинг YouTube через iframe) =====================
+         Семантика: <section> + <header> з h2. Адаптивність: aspect-video (16:9) + w-full + max-w,
+         тому плеєр не виходить за межі екрана. title — для екранних рідерів, loading="lazy" — оптимізація. -->
+    <section class="gutter-x flex flex-col items-center gap-8 py-12 lg:py-16" id="video" aria-labelledby="video-title">
+      <header class="flex max-w-[60ch] flex-col items-center gap-4 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-surface-2 bg-surface px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide">
+          <i class="fas fa-circle-play text-brand" aria-hidden="true"></i> Відео
+        </p>
+        <h2 id="video-title" class="text-h2 font-black">Дивись, як це <em class="italic text-brand">працює</em></h2>
+        <p class="text-muted">Коротке відео про UkrMovych: як проходить підготовка до НМТ з української мови.</p>
+      </header>
+      <div class="aspect-video w-full max-w-3xl overflow-hidden rounded-2xl border-2 border-black bg-surface shadow-hard">
+        <iframe
+          class="size-full border-0"
+          src="https://www.youtube.com/embed/MMttRCcRjyk"
+          title="Відео про UkrMovych: підготовка до НМТ з української мови"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- ===================== МЕДІА №2 і №3: ІНТЕРАКТИВНА КАРТА УКРАЇНИ + ДИНАМІЧНИЙ ІНФОРМЕР =====================
+         Карта — Google Maps через iframe (адаптивний контейнер, title, loading="lazy").
+         Інформери (час і погода) — у семантичному <aside>; погода підвантажується зі стороннього сервісу Open-Meteo. -->
+    <section class="gutter-x grid grid-cols-1 gap-8 py-12 lg:grid-cols-[2fr_1fr] lg:py-16" id="location" aria-labelledby="location-title">
+      <header class="col-span-full flex flex-col items-center gap-4 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-surface-2 bg-surface px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide">
+          <i class="fas fa-earth-europe text-brand" aria-hidden="true"></i> Онлайн
+        </p>
+        <h2 id="location-title" class="text-h2 font-black">Навчайся онлайн <em class="italic text-brand">з будь-якого міста</em></h2>
+      </header>
+
+      <!-- Інтерактивна карта (Google Maps embed) -->
+      <div class="aspect-video w-full overflow-hidden rounded-2xl border-2 border-black bg-surface shadow-hard lg:aspect-auto lg:min-h-[360px]">
+        <iframe
+          class="size-full border-0"
+          src="https://maps.google.com/maps?q=Ukraine&amp;hl=uk&amp;z=5&amp;output=embed"
+          title="Інтерактивна карта України: уроки UkrMovych проходять онлайн для учнів з усіх регіонів"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          loading="lazy"></iframe>
+      </div>
+
+      <!-- Динамічні інформери: київський час (JS Intl API) та погода у Києві (сторонній сервіс Open-Meteo, дані підвантажуються через fetch) -->
+      <aside class="flex flex-col justify-center gap-5 rounded-2xl border border-surface-2 bg-surface p-6 sm:p-8" aria-label="Інформери: час і погода">
+        <header>
+          <h3 class="text-2xl font-bold">Уроки онлайн</h3>
+          <p class="mt-1 text-sm text-muted">Київський час і погода — щоб планувати заняття.</p>
+        </header>
+        <dl class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col-reverse gap-1 rounded-xl border border-surface-2 bg-ink p-4">
+            <dt class="text-xs font-bold uppercase tracking-wide text-muted">Час у Києві</dt>
+            <dd><time class="text-2xl font-black text-brand" id="kyiv-time" aria-live="off">--:--:--</time></dd>
+          </div>
+          <div class="flex flex-col-reverse gap-1 rounded-xl border border-surface-2 bg-ink p-4">
+            <dt class="text-xs font-bold uppercase tracking-wide text-muted">Погода в Києві</dt>
+            <dd class="text-2xl font-black text-brand" id="weather-temp">—</dd>
+          </div>
+        </dl>
+        <p class="text-sm text-muted" id="weather-details" aria-live="polite">Завантаження погоди…</p>
+        <p class="text-xs text-muted">Погода: <a class="underline transition-colors hover:text-brand" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a></p>
+      </aside>
+    </section>
+
+    <!-- ===================== ВІДГУКИ (сітка 1 → 2 → 3) ===================== -->
+    <section class="gutter-x grid grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:py-16" id="reviews" aria-labelledby="reviews-title">
+      <header class="col-span-full flex flex-col items-center gap-4 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-surface-2 bg-surface px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide">
+          <i class="fas fa-star text-brand" aria-hidden="true"></i> Відгуки
+        </p>
+        <h2 id="reviews-title" class="text-h2 font-black">Що кажуть <em class="italic text-brand">наші учні</em></h2>
+        <p class="max-w-[60ch] text-muted">Понад 5000 учнів вже готуються до НМТ разом з UkrMovych. Приєднуйся до ком'юніті успішних абітурієнтів.</p>
+      </header>
+
+      <article class="flex flex-col gap-4 rounded-2xl border border-surface-2 bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-brand sm:p-8">
+        <header class="flex items-center gap-4">
+          <span class="grid size-9 shrink-0 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold" aria-hidden="true">В</span>
+          <p class="flex flex-col"><strong>Владислава</strong><span class="block text-sm tracking-[2px] text-brand" aria-label="5 з 5">★★★★★</span></p>
+        </header>
+        <blockquote class="flex-1 text-sm italic text-muted">"Неймовірно корисний сервіс! Квізлети просто топ — за допомогою них запам'ятовувати складні правила стало набагато простіше. Бот в телеграмі завжди під рукою, коли є вільна хвилинка."</blockquote>
+        <footer class="flex justify-between border-t border-surface-2 pt-4 text-muted">
+          <small class="text-xs font-bold uppercase tracking-wide">НМТ: 195+ балів</small><i class="fab fa-instagram" aria-hidden="true"></i>
+        </footer>
+      </article>
+
+      <article class="flex flex-col gap-4 rounded-2xl border border-surface-2 bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-brand sm:p-8">
+        <header class="flex items-center gap-4">
+          <span class="grid size-9 shrink-0 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold" aria-hidden="true">М</span>
+          <p class="flex flex-col"><strong>Марія</strong><span class="block text-sm tracking-[2px] text-brand" aria-label="5 з 5">★★★★★</span></p>
+        </header>
+        <blockquote class="flex-1 text-sm italic text-muted">"Раніше наголоси були моїм найбільшим жахом. Завдяки вашій системі повторень всі наголоси вивчила за тиждень! Тепер клацаю ці завдання як горішки."</blockquote>
+        <footer class="flex justify-between border-t border-surface-2 pt-4 text-muted">
+          <small class="text-xs font-bold uppercase tracking-wide">НМТ: 200 балів</small><i class="fab fa-telegram" aria-hidden="true"></i>
+        </footer>
+      </article>
+
+      <article class="flex flex-col gap-4 rounded-2xl border border-surface-2 bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-brand sm:max-lg:col-span-2 sm:p-8">
+        <header class="flex items-center gap-4">
+          <span class="grid size-9 shrink-0 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold" aria-hidden="true">Н</span>
+          <p class="flex flex-col"><strong>Назар</strong><span class="block text-sm tracking-[2px] text-brand" aria-label="5 з 5">★★★★★</span></p>
+        </header>
+        <blockquote class="flex-1 text-sm italic text-muted">"Допомагає нагадуваннями не закидати навчання. Дуже зручно, що бот сам каже, коли пора потренуватись. Матеріал викладений структуровано і без зайвої води."</blockquote>
+        <footer class="flex justify-between border-t border-surface-2 pt-4 text-muted">
+          <small class="text-xs font-bold uppercase tracking-wide">НМТ: 190+ балів</small><i class="fab fa-tiktok" aria-hidden="true"></i>
+        </footer>
+      </article>
+
+      <aside class="col-span-full mt-4 grid grid-cols-1 items-center gap-x-4 gap-y-1 rounded-2xl bg-brand p-6 text-ink sm:p-8 lg:grid-cols-[1fr_auto_auto]" aria-label="Заклик до дії">
+        <h3 class="text-2xl font-black lg:col-start-1">Готовий(-а) стати наступним стобальником?</h3>
+        <p class="text-sm font-semibold lg:col-start-1">Приєднуйся до тисяч задоволених учнів вже зараз.</p>
+        <ul class="mt-4 flex lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0" aria-hidden="true">
+          <li class="grid size-9 place-items-center rounded-full border-2 border-ink bg-white text-sm font-bold">В</li>
+          <li class="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold text-white">М</li>
+          <li class="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-ink bg-surface-2 text-sm font-bold text-white">Н</li>
+          <li class="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-ink bg-ink text-xs font-bold text-white">+5k</li>
+        </ul>
+        <button type="button" class="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-ink px-5 py-3 font-bold text-white transition hover:bg-black active:scale-95 sm:w-auto sm:justify-self-start lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:mt-0">
+          Почати навчання <i class="fas fa-arrow-right text-brand" aria-hidden="true"></i>
+        </button>
+      </aside>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="gutter-x grid grid-cols-1 items-start gap-8 py-12 lg:grid-cols-[1fr_2fr] lg:gap-x-16 lg:py-16" id="faq" aria-labelledby="faq-title">
+      <header class="lg:col-start-1">
+        <h2 id="faq-title" class="text-h2 font-black">FAQ</h2>
+        <p class="mt-4 text-muted">Короткі відповіді на питання, які хвилюють учнів та їхніх батьків.</p>
+      </header>
+      <aside class="flex flex-col gap-2 rounded-2xl border border-surface-2 bg-surface p-6 sm:p-8 lg:col-start-1" aria-label="Додаткові питання">
+        <h3 class="text-2xl font-bold">Ще питання?</h3>
+        <p class="mb-2 text-sm text-muted">Ми відповідаємо швидко і без зайвих слів.</p>
+        <a class="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border-2 border-black bg-ink px-5 py-3 font-bold text-white transition hover:border-brand active:scale-95" href="#contact"><i class="fas fa-paper-plane" aria-hidden="true"></i> Написати</a>
+      </aside>
+      <ul class="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <li><details class="border-b border-surface-2 py-4" open><summary class="faq-summary cursor-pointer rounded-lg font-bold">Чи безпечно оплачувати?</summary><p class="mt-2 text-sm text-muted">Так. Оплата проходить через захищені платіжні системи. Ми не зберігаємо дані карток і не передаємо їх третім особам.</p></details></li>
+        <li><details class="border-b border-surface-2 py-4"><summary class="faq-summary cursor-pointer rounded-lg font-bold">Як дитина отримає доступ?</summary><p class="mt-2 text-sm text-muted">Одразу після оплати ми надаємо повний доступ до платформи. Жодних складних реєстрацій.</p></details></li>
+        <li><details class="border-b border-surface-2 py-4"><summary class="faq-summary cursor-pointer rounded-lg font-bold">Чи відповідає програмі УЦОЯО?</summary><p class="mt-2 text-sm text-muted">Так. Усі завдання створені за офіційними вимогами НМТ. Формат повністю збігається з іспитом.</p></details></li>
+        <li><details class="border-b border-surface-2 py-4"><summary class="faq-summary cursor-pointer rounded-lg font-bold">Таймер знижки закінчився?</summary><p class="mt-2 text-sm text-muted">Нічого страшного. Пройди ще один мікротест, і знижка знову стане доступною.</p></details></li>
+        <li><details class="border-b border-surface-2 py-4"><summary class="faq-summary cursor-pointer rounded-lg font-bold">Залишилися питання?</summary><p class="mt-2 text-sm text-muted">Напиши нам у підтримку або заповни форму нижче.</p></details></li>
+      </ul>
+    </section>
+
+    <!-- ===================== КОНТАКТИ ===================== -->
+    <section class="gutter-x grid grid-cols-1 gap-8 bg-ink py-12 lg:grid-cols-[1fr_2fr] lg:gap-x-16 lg:py-16" id="contact" aria-labelledby="contact-title">
+      <header>
+        <h2 id="contact-title" class="text-h2 font-black">Напиши нам</h2>
+        <p class="my-4 text-muted">Три поля, жодних зайвих питань. Відповідаємо протягом дня.</p>
+        <ul class="flex flex-col gap-4">
+          <li class="grid grid-cols-[40px_1fr] items-center gap-x-4">
+            <i class="fas fa-envelope row-span-2 grid size-10 place-items-center rounded-lg border border-surface-2 bg-surface text-brand" aria-hidden="true"></i>
+            <small class="text-xs text-muted">Email</small>
+            <strong class="break-all"><a class="transition-colors hover:text-brand" href="mailto:hello@ukrmovych.ua">hello@ukrmovych.ua</a></strong>
+          </li>
+          <li class="grid grid-cols-[40px_1fr] items-center gap-x-4">
+            <i class="fas fa-robot row-span-2 grid size-10 place-items-center rounded-lg border border-surface-2 bg-surface text-brand" aria-hidden="true"></i>
+            <small class="text-xs text-muted">Bot</small>
+            <strong><a class="transition-colors hover:text-brand" href="https://t.me/ukrmovych_bot" target="_blank" rel="noopener noreferrer">@ukrmovych_bot</a></strong>
+          </li>
+          <li class="grid grid-cols-[40px_1fr] items-center gap-x-4">
+            <i class="fas fa-hashtag row-span-2 grid size-10 place-items-center rounded-lg border border-surface-2 bg-surface text-brand" aria-hidden="true"></i>
+            <small class="text-xs text-muted">Socials</small>
+            <strong><a class="transition-colors hover:text-brand" href="https://instagram.com/kozinuck?srtk=cGljMzk4OGxheHY5" target="_blank" rel="noopener noreferrer">Instagram</a>, <a class="transition-colors hover:text-brand" href="https://www.tiktok.com/@ukr_movych?_r=1&amp;_t=ZS-9AWTY7KfCmg" target="_blank" rel="noopener noreferrer">TikTok</a></strong>
+          </li>
+        </ul>
+      </header>
+
+      <form class="grid grid-cols-1 gap-4 rounded-3xl border border-surface-2 bg-surface p-6 sm:grid-cols-2 sm:p-8" action="mailto:hello@ukrmovych.ua" method="post" enctype="text/plain" data-mail-form="contact">
+        <label class="flex flex-col gap-1.5 text-xs font-bold">Ім'я
+          <input class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="text" name="name" placeholder="Ваше ім'я" required>
+        </label>
+        <label class="flex flex-col gap-1.5 text-xs font-bold">Email або Телефон
+          <input class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="text" name="contact" placeholder="Ваші контакти" required>
+        </label>
+        <label class="flex flex-col gap-1.5 text-xs font-bold sm:col-span-2">Оберіть тему
+          <select class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white focus:border-brand" name="topic"><option>Питання по курсу</option><option>Оплата</option><option>Співпраця</option></select>
+        </label>
+        <fieldset class="sm:col-span-2">
+          <legend class="mb-2 text-xs font-bold">Хто ви?</legend>
+          <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Учень" checked> Учень</label>
+            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Вчитель"> Вчитель</label>
+            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Батьки"> Батьки</label>
+            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Випускник"> Випускник</label>
+          </div>
+        </fieldset>
+        <label class="flex flex-col gap-1.5 text-xs font-bold sm:col-span-2">Повідомлення
+          <textarea class="rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" name="message" rows="4" placeholder="Чим ми можемо допомогти?"></textarea>
+        </label>
+        <label class="flex items-center gap-2 text-sm text-muted sm:col-span-2"><input class="size-4 accent-brand" type="checkbox" required> Я приймаю умови обробки персональних даних</label>
+        <button class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-brand px-7 py-4 font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:col-span-2" type="submit">Надіслати</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER (1 → 2 → 4 колонки) ===================== -->
+  <footer class="gutter-x grid grid-cols-1 items-start gap-8 border-t border-surface-2 bg-ink pb-8 pt-12 md:grid-cols-2 lg:grid-cols-4 lg:pt-16">
+    <section aria-label="Про UkrMovych" class="flex flex-col gap-4">
+      <a class="flex items-center gap-2 text-xl font-bold" href="#top" aria-label="UkrMovych — на початок">
+        <img src="assets/images/logo.png" alt="" width="32" height="32" class="size-8" loading="lazy">
+        <span>Ukr<span class="text-brand">Movych</span></span>
+      </a>
+      <p class="max-w-[32ch] text-sm text-muted">Розумний тренажер для підготовки до НМТ з української мови: 20 секунд щодня — і +1 бал.</p>
+      <ul class="flex gap-2">
+        <li><a class="grid size-11 place-items-center rounded-full border border-surface-2 text-muted transition-colors hover:border-brand hover:text-brand" href="https://instagram.com/kozinuck?srtk=cGljMzk4OGxheHY5" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+        <li><a class="grid size-11 place-items-center rounded-full border border-surface-2 text-muted transition-colors hover:border-brand hover:text-brand" href="https://www.tiktok.com/@ukr_movych?_r=1&amp;_t=ZS-9AWTY7KfCmg" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a></li>
+      </ul>
+    </section>
+
+    <nav aria-label="Навігація у футері">
+      <h2 class="mb-4 text-sm font-bold">Навігація</h2>
+      <ul class="flex flex-col gap-2 text-sm text-muted">
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#reviews">Результати</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#how">Як це працює</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#trainer">Тренажери</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#video">Відео</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#faq">FAQ</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#contact">Контакти</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Продукт">
+      <h2 class="mb-4 text-sm font-bold">Продукт</h2>
+      <ul class="flex flex-col gap-2 text-sm text-muted">
+        <li><a class="inline-block py-1 text-brand transition-colors hover:text-brand-hover" href="#trainer">Спробувати безкоштовно</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#">Публічна оферта</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#">Політика конфіденційності</a></li>
+      </ul>
+    </nav>
+
+    <form class="flex flex-col gap-2" action="mailto:hello@ukrmovych.ua" method="post" enctype="text/plain" data-mail-form="subscribe">
+      <h2 class="mb-2 text-sm font-bold">Тренуйся без нудної теорії</h2>
+      <label class="sr-only" for="sub-email">Ваш email</label>
+      <input id="sub-email" class="min-h-11 rounded-lg border border-surface-2 bg-surface p-3 text-white placeholder:text-muted focus:border-brand" type="email" name="email" placeholder="Ваш email" required>
+      <button class="inline-flex min-h-11 items-center justify-center rounded-2xl border-2 border-black bg-ink px-5 py-3 font-bold text-white transition hover:border-brand active:scale-95" type="submit">Підписатись</button>
+    </form>
+
+    <div class="flex flex-col gap-4 border-t border-surface-2 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between md:col-span-2 lg:col-span-4">
+      <p>© 2026 UkrMovych. Всі права захищені.</p>
+      <ul class="flex gap-4">
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#">Політика</a></li>
+        <li><a class="inline-block py-1 transition-colors hover:text-brand" href="#">Оферта</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    /* Мобільне меню: перемикаємо hidden/flex та aria-атрибути */
+    (function () {
+      var btn = document.getElementById("menu-toggle");
+      var menu = document.getElementById("menu");
+      var icon = btn.querySelector("i");
+
+      function setOpen(open) {
+        menu.classList.toggle("hidden", !open);
+        menu.classList.toggle("flex", open);
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Закрити меню" : "Відкрити меню");
+        icon.className = open ? "fas fa-xmark" : "fas fa-bars";
+      }
+
+      btn.addEventListener("click", function () {
+        setOpen(btn.getAttribute("aria-expanded") !== "true");
+      });
+      menu.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", function () { setOpen(false); });
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+          setOpen(false);
+          btn.focus();
+        }
+      });
+    })();
+
+    /* Таймер знижки: зворотний відлік 14:59 */
+    (function () {
+      var timer = document.querySelector("#pricing time");
+      var display = timer && timer.querySelector("[data-countdown]");
+      if (!timer || !display) return;
+
+      var deadline = Date.now() + (14 * 60 + 59) * 1000;
+      var intervalId;
+
+      function updateTimer() {
+        var remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        var minutes = Math.floor(remaining / 60);
+        var seconds = remaining % 60;
+        display.textContent = String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+        timer.setAttribute("datetime", "PT" + minutes + "M" + seconds + "S");
+        if (remaining === 0) window.clearInterval(intervalId);
+      }
+
+      intervalId = window.setInterval(updateTimer, 250);
+      updateTimer();
+    })();
+
+    /* Інформер №1: годинник за київським часом */
+    (function () {
+      var clock = document.getElementById("kyiv-time");
+      if (!clock) return;
+
+      var formatter = new Intl.DateTimeFormat("uk-UA", {
+        timeZone: "Europe/Kyiv",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+      });
+
+      function updateKyivTime() {
+        var now = new Date();
+        clock.textContent = formatter.format(now);
+        clock.setAttribute("datetime", now.toISOString());
+      }
+
+      updateKyivTime();
+      window.setInterval(updateKyivTime, 1000);
+    })();
+
+    /* Інформер №2: погода у Києві зі стороннього сервісу Open-Meteo (без API-ключа) */
+    (function () {
+      var temp = document.getElementById("weather-temp");
+      var info = document.getElementById("weather-details");
+      if (!temp || !info) return;
+
+      var url = "https://api.open-meteo.com/v1/forecast?latitude=50.45&longitude=30.52" +
+        "&current=temperature_2m,relative_humidity_2m,wind_speed_10m&timezone=Europe%2FKyiv";
+
+      fetch(url)
+        .then(function (response) {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.json();
+        })
+        .then(function (data) {
+          var c = data.current;
+          temp.textContent = Math.round(c.temperature_2m) + "°C";
+          info.textContent = "Вологість: " + c.relative_humidity_2m + "% • Вітер: " + Math.round(c.wind_speed_10m) + " км/год";
+        })
+        .catch(function () {
+          temp.textContent = "—";
+          info.textContent = "Не вдалося завантажити погоду. Спробуйте оновити сторінку.";
+        });
+    })();
+
+    /* Форми: відкриваємо поштовий клієнт із заповненим листом */
+    document.querySelectorAll("[data-mail-form]").forEach(function (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var values = new FormData(form);
+        var isContact = form.dataset.mailForm === "contact";
+        var subject = isContact ? "Повідомлення з сайту UkrMovych" : "Підписка на UkrMovych";
+        var body = Array.from(values.entries())
+          .map(function (pair) { return pair[0] + ": " + pair[1]; })
+          .join("\n");
+        window.location.href = "mailto:hello@ukrmovych.ua?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      });
+    });
+  </script>
+</body>
+</html>

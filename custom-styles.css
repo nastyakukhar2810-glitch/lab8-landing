@@ -1,0 +1,103 @@
+/* ==========================================================================
+   custom-styles.css — ЛР №6
+   Тут лише те, що незручно або недоцільно виражати утилітами Tailwind:
+   дизайн-токени, складні фони, псевдоелементи, стилізація <summary>,
+   глобальні налаштування доступності. Усе інше (layout, spacing, typography,
+   colors, responsive, hover, focus) — класами Tailwind в index.html.
+   ========================================================================== */
+
+/* ===== 1. Design tokens (дизайн-система з ЛР №4) =====
+   Ті самі значення продубльовано в tailwind.config (index.html) як
+   bg-brand, bg-ink, bg-surface, shadow-hard тощо. */
+:root {
+  --color-primary: #FF7A00;
+  --color-bg: #12181E;
+  --color-surface: #1C242D;
+  --color-surface-2: #252F3A;
+  --color-focus: #3B82F6;
+  --container-width: 1200px;
+  /* Горизонтальний відступ: контент по центру в 1200px, фон секції — на всю ширину */
+  --gutter: max(1rem, calc((100% - var(--container-width)) / 2));
+}
+
+/* ===== 2. Base ===== */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px; /* щоб sticky-шапка не перекривала якір */
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Утиліта-контейнер: використовується замість вкладених div-обгорток,
+   щоб зберегти семантичну структуру <section> / <footer> */
+.gutter-x {
+  padding-inline: var(--gutter);
+}
+
+/* ===== 3. Картки: декоративні фони (неможливо коротко зробити утилітами) ===== */
+.card-media--grid {
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(var(--color-surface-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-surface-2) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.card-media--ring::before {
+  content: "";
+  position: absolute;
+  width: 104px;
+  height: 104px;
+  border: 4px dashed var(--color-surface-2);
+  border-radius: 50%;
+}
+
+.card-media--lines {
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(var(--color-surface-2), var(--color-surface-2)),
+    linear-gradient(var(--color-surface-2), var(--color-surface-2)),
+    linear-gradient(var(--color-surface-2), var(--color-surface-2));
+  background-size: 70% 8px, 45% 8px, 65% 8px;
+  background-position: 16px 24px, 16px 44px, 16px 64px;
+  background-repeat: no-repeat;
+}
+
+/* ===== 4. FAQ: власний маркер для <summary> ===== */
+.faq-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+}
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+.faq-summary::after {
+  content: "+";
+  flex: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+details[open] > .faq-summary::after {
+  transform: rotate(45deg);
+}
+
+/* ===== 5. Accessibility: зменшені анімації ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
