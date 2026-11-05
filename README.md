@@ -33,7 +33,11 @@ cd lab8-landing
 ## Демо
 
 - GitHub Pages: https://nastyakukhar2810-glitch.github.io/lab8-landing/
-- Netlify: _(додати посилання після деплою)_
+- Netlify: git pull
+# у README.md заміни заглушку на https://ukrmovych.netlify.app
+git add README.md
+git commit -m "docs: add Netlify deploy link to README"
+git push
 
 ## Автор
 
