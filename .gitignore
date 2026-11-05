@@ -1,0 +1,15 @@
+# системні файли
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# редактори
+.vscode/
+.idea/
+
+# залежності та логи
+node_modules/
+*.log
+
+# архіви
+*.zip
