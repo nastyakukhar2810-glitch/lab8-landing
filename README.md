@@ -38,4 +38,5 @@ cd lab8-landing
 
 ## Автор
 
-Анастасія — [@nastyakukhar2810-glitch](https://github.com/nastyakukhar2810-glitch)
+Анастасія — [@nastyakukhar2810-glitch](https://github.com/nastyakukhar2810-glitch) 
+Статус: сайт опубліковано.
