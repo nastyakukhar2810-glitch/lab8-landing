@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <!-- Tailwind CSS (CDN) + дизайн-система з ЛР №4 як тема Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -74,7 +73,7 @@
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center lg:gap-4">
         <!-- Окрема сторінка входу буде в наступних роботах: поки це кнопка без переходу -->
         <button type="button" class="flex min-h-11 items-center justify-start rounded-lg text-sm font-semibold transition-colors hover:text-brand">Увійти</button>
-        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-2xl border-2 border-transparent bg-brand px-4 py-2.5 text-sm font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:w-auto" href="#trainer">Почати безкоштовно</a>
+        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-2xl border-2 border-transparent bg-brand px-4 py-2.5 text-sm font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:w-auto" href="#trainer">Спробувати безкоштовно</a>
       </div>
     </div>
   </header>
@@ -360,7 +359,7 @@
     <section class="gutter-x grid grid-cols-1 gap-8 bg-ink py-12 lg:grid-cols-[1fr_2fr] lg:gap-x-16 lg:py-16" id="contact" aria-labelledby="contact-title">
       <header>
         <h2 id="contact-title" class="text-h2 font-black">Напиши нам</h2>
-        <p class="my-4 text-muted">Три поля, жодних зайвих питань. Відповідаємо протягом дня.</p>
+        <p class="my-4 text-muted">Заповніть форму, відповімо протягом дня.</p>
         <ul class="flex flex-col gap-4">
           <li class="grid grid-cols-[40px_1fr] items-center gap-x-4">
             <i class="fas fa-envelope row-span-2 grid size-10 place-items-center rounded-lg border border-surface-2 bg-surface text-brand" aria-hidden="true"></i>
@@ -380,30 +379,34 @@
         </ul>
       </header>
 
-      <form class="grid grid-cols-1 gap-4 rounded-3xl border border-surface-2 bg-surface p-6 sm:grid-cols-2 sm:p-8" action="mailto:hello@ukrmovych.ua" method="post" enctype="text/plain" data-mail-form="contact">
-        <label class="flex flex-col gap-1.5 text-xs font-bold">Ім'я
-          <input class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="text" name="name" placeholder="Ваше ім'я" required>
-        </label>
-        <label class="flex flex-col gap-1.5 text-xs font-bold">Email або Телефон
-          <input class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="text" name="contact" placeholder="Ваші контакти" required>
-        </label>
-        <label class="flex flex-col gap-1.5 text-xs font-bold sm:col-span-2">Оберіть тему
-          <select class="min-h-11 rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white focus:border-brand" name="topic"><option>Питання по курсу</option><option>Оплата</option><option>Співпраця</option></select>
-        </label>
-        <fieldset class="sm:col-span-2">
-          <legend class="mb-2 text-xs font-bold">Хто ви?</legend>
-          <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Учень" checked> Учень</label>
-            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Вчитель"> Вчитель</label>
-            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Батьки"> Батьки</label>
-            <label class="flex min-h-11 items-center gap-2 rounded-lg border border-surface-2 bg-ink p-3 text-sm transition-colors has-[:checked]:border-brand"><input class="accent-brand" type="radio" name="role" value="Випускник"> Випускник</label>
-          </div>
-        </fieldset>
-        <label class="flex flex-col gap-1.5 text-xs font-bold sm:col-span-2">Повідомлення
-          <textarea class="rounded-lg border border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" name="message" rows="4" placeholder="Чим ми можемо допомогти?"></textarea>
-        </label>
-        <label class="flex items-center gap-2 text-sm text-muted sm:col-span-2"><input class="size-4 accent-brand" type="checkbox" required> Я приймаю умови обробки персональних даних</label>
-        <button class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-brand px-7 py-4 font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:col-span-2" type="submit">Надіслати</button>
+      <form id="feedbackForm" class="grid grid-cols-1 gap-4 rounded-3xl border border-surface-2 bg-surface p-6 sm:grid-cols-2 sm:p-8" novalidate>
+        <div class="flex flex-col gap-1.5">
+          <label for="username" class="text-xs font-bold">Ім'я</label>
+          <input class="min-h-11 w-full rounded-lg border-2 border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="text" id="username" name="name" placeholder="Ваше ім'я" autocomplete="name" required aria-required="true" aria-invalid="false" aria-describedby="usernameError">
+          <p id="usernameError" class="hidden text-xs text-red-400"></p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="email" class="text-xs font-bold">Електронна пошта</label>
+          <input class="min-h-11 w-full rounded-lg border-2 border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="email" id="email" name="email" placeholder="user@gmail.com" autocomplete="email" required aria-required="true" aria-invalid="false" aria-describedby="emailError">
+          <p id="emailError" class="hidden text-xs text-red-400"></p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="phone" class="text-xs font-bold">Телефон</label>
+          <input class="min-h-11 w-full rounded-lg border-2 border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" type="tel" id="phone" name="phone" placeholder="+380501234567" autocomplete="tel" inputmode="tel" required aria-required="true" aria-invalid="false" aria-describedby="phoneError">
+          <p id="phoneError" class="hidden text-xs text-red-400"></p>
+        </div>
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label for="message" class="text-xs font-bold">Повідомлення</label>
+          <textarea class="w-full rounded-lg border-2 border-surface-2 bg-ink p-3 text-sm font-normal text-white placeholder:text-muted focus:border-brand" id="message" name="message" rows="4" placeholder="Чим ми можемо допомогти?" required aria-required="true" aria-invalid="false" aria-describedby="messageError"></textarea>
+          <p id="messageError" class="hidden text-xs text-red-400"></p>
+        </div>
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label for="agreement" class="flex min-h-11 items-center gap-2 text-sm text-muted">
+            <input class="size-5 accent-brand" type="checkbox" id="agreement" name="agreement" required aria-required="true" aria-invalid="false" aria-describedby="agreementError"> Я приймаю умови обробки персональних даних
+          </label>
+          <p id="agreementError" class="hidden text-xs text-red-400"></p>
+        </div>
+        <button id="submitBtn" class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border-2 border-transparent bg-brand px-7 py-4 font-bold text-ink shadow-hard transition hover:bg-brand-hover active:translate-x-0.5 active:translate-y-0.5 active:bg-brand-pressed active:shadow-hard-sm sm:col-span-2" type="submit">Надіслати</button>
       </form>
     </section>
   </main>
@@ -459,6 +462,17 @@
     </div>
   </footer>
 
+  <!-- Модальне вікно успішного (імітованого) надсилання форми -->
+  <div id="successModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText">
+    <div class="w-full max-w-md rounded-3xl border border-surface-2 bg-surface p-6 text-center sm:p-8">
+      <i class="fas fa-circle-check text-5xl text-brand" aria-hidden="true"></i>
+      <h2 id="modalTitle" class="mt-4 text-2xl font-black">Дякуємо!</h2>
+      <p id="modalText" class="mt-2 text-muted">Форма успішно пройшла клієнтську валідацію. Демонстрація успішного надсилання.</p>
+      <button id="closeModalBtn" type="button" class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-brand px-7 py-3 font-bold text-ink transition hover:bg-brand-hover">Закрити</button>
+    </div>
+  </div>
+
+  <script src="assets/js/validation.js" defer></script>
   <script>
     /* Мобільне меню: перемикаємо hidden/flex та aria-атрибути */
     (function () {
@@ -559,7 +573,7 @@
     })();
 
     /* Форми: відкриваємо поштовий клієнт із заповненим листом */
-    document.querySelectorAll("[data-mail-form]").forEach(function (form) {
+    document.querySelectorAll('[data-mail-form="subscribe"]').forEach(function (form) {
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         var values = new FormData(form);
